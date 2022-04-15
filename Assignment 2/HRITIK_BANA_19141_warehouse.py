@@ -44,92 +44,92 @@ class WarehouseAgent():
             done: boolean value to determine if episode terminating condition is reached
         """
         done = False
-        if action == 'UP':
-            if self.matrix[self.agent_position[0], self.agent_position[1] - 1] == -1:
+        if action == 'LEFT':
+            if self.matrix[self.agent_position[0]][self.agent_position[1] - 1] == -1:
                 reward = -1
 
-            elif self.matrix[self.agent_position[0], self.agent_position[1] - 1] == 2 and self.matrix[self.agent_position[0], self.agent_position[1] - 2] == -1:
+            elif self.matrix[self.agent_position[0]][self.agent_position[1] - 1] == 2 and self.matrix[self.agent_position[0]][self.agent_position[1] - 2] == -1:
                 reward = -1
 
-            elif self.matrix[self.agent_position[0], self.agent_position[1] - 1] == 2:
+            elif self.matrix[self.agent_position[0]][self.agent_position[1] - 1] == 2:
 
-                self.matrix[self.agent_position[0], self.agent_position[1] - 1] = 1
-                self.matrix[self.agent_position[0], self.agent_position[1]] = 0
-                self.matrix[self.agent_position[0], self.agent_position[1] - 2] = 2
+                self.matrix[self.agent_position[0]][self.agent_position[1] - 1] = 1
+                self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
+                self.matrix[self.agent_position[0]][self.agent_position[1] - 2] = 2
 
                 self.box_location[1] = self.box_location[1] - 1
                 self.agent_position[1] = self.agent_position[1] - 1
 
             else:
-                self.matrix[self.agent_position[0], self.agent_position[1] - 1] = 1
-                self.matrix[self.agent_position[0], self.agent_position[1]] = 0
+                self.matrix[self.agent_position[0]][self.agent_position[1] - 1] = 1
+                self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
                 self.agent_position[1] = self.agent_position[1] - 1
 
-        elif action == 'DOWN':
+        elif action == 'RIGHT':
             
-            print(self.agent_position[0])
+#             print(self.agent_position[0])
             if self.matrix[self.agent_position[0]][self.agent_position[1] + 1] == -1:
                 reward = -1
 
-            elif self.matrix[self.agent_position[0], self.agent_position[1] + 1] == 2 and self.matrix[self.agent_position[0], self.agent_position[1] + 2] == -1:
+            elif self.matrix[self.agent_position[0]][self.agent_position[1] + 1] == 2 and self.matrix[self.agent_position[0]][self.agent_position[1] + 2] == -1:
                 reward = -1
 
-            elif self.matrix[self.agent_position[0], self.agent_position[1] + 1] == 2:
+            elif self.matrix[self.agent_position[0]][self.agent_position[1] + 1] == 2:
 
-                self.matrix[self.agent_position[0], self.agent_position[1] + 1] = 1
-                self.matrix[self.agent_position[0], self.agent_position[1]] = 0
-                self.matrix[self.agent_position[0], self.agent_position[1] + 2] = 2
+                self.matrix[self.agent_position[0]][self.agent_position[1] + 1] = 1
+                self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
+                self.matrix[self.agent_position[0]][self.agent_position[1] + 2] = 2
 
                 self.box_location[1] = self.box_location[1] + 1
                 self.agent_position[1] = self.agent_position[1] + 1
 
             else:
-                self.matrix[self.agent_position[0], self.agent_position[1] + 1] = 1
-                self.matrix[self.agent_position[0], self.agent_position[1]] = 0
+                self.matrix[self.agent_position[0]][self.agent_position[1] + 1] = 1
+                self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
                 self.agent_position[1] = self.agent_position[1] + 1
 
-        elif action == 'LEFT':
+        elif action == 'UP':
             
             if self.matrix[self.agent_position[0] - 1][self.agent_position[1]] == -1:
                 reward = -1
 
-            elif self.matrix[self.agent_position[0] - 1, self.agent_position[1]] == 2 and self.matrix[self.agent_position[0] - 2, self.agent_position[1]] == -1:
+            elif self.matrix[self.agent_position[0] - 1][self.agent_position[1]] == 2 and self.matrix[self.agent_position[0] - 2][self.agent_position[1]] == -1:
                 reward = -1
 
-            elif self.matrix[self.agent_position[0] - 1, self.agent_position[1]] == 2:
+            elif self.matrix[self.agent_position[0] - 1][self.agent_position[1]] == 2:
 
-                self.matrix[self.agent_position[0] - 1, self.agent_position[1]] = 1
-                self.matrix[self.agent_position[0], self.agent_position[1]] = 0
-                self.matrix[self.agent_position[0] - 2, self.agent_position[1]] = 2
+                self.matrix[self.agent_position[0] - 1][self.agent_position[1]] = 1
+                self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
+                self.matrix[self.agent_position[0] - 2][self.agent_position[1]] = 2
 
                 self.box_location[0] = self.box_location[0] - 1
                 self.agent_position[0] = self.agent_position[0] - 1
 
             else:
-                self.matrix[self.agent_position[0] - 1, self.agent_position[1]] = 1
-                self.matrix[self.agent_position[0], self.agent_position[1]] = 0
+                self.matrix[self.agent_position[0] - 1][self.agent_position[1]] = 1
+                self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
                 self.agent_position[0] = self.agent_position[0] - 1
 
-        else:
+        elif action == 'DOWN':
             
-            if self.matrix[self.agent_position[0] + 1, self.agent_position[1]] == -1:
+            if self.matrix[self.agent_position[0] + 1][self.agent_position[1]] == -1:
                 reward = -1
 
-            elif self.matrix[self.agent_position[0] + 1, self.agent_position[1]] == 2 and self.matrix[self.agent_position[0] + 2, self.agent_position[1]] == -1:
+            elif self.matrix[self.agent_position[0] + 1][self.agent_position[1]] == 2 and self.matrix[self.agent_position[0] + 2][self.agent_position[1]] == -1:
                 reward = -1
 
-            elif self.matrix[self.agent_position[0] + 1, self.agent_position[1]] == 2:
+            elif self.matrix[self.agent_position[0] + 1][self.agent_position[1]] == 2:
 
-                self.matrix[self.agent_position[0] + 1, self.agent_position[1]] = 1
-                self.matrix[self.agent_position[0], self.agent_position[1]] = 0
-                self.matrix[self.agent_position[0] + 2, self.agent_position[1]] = 2
+                self.matrix[self.agent_position[0] + 1][self.agent_position[1]] = 1
+                self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
+                self.matrix[self.agent_position[0] + 2][self.agent_position[1]] = 2
 
                 self.box_location[0] = self.box_location[0] + 1
                 self.agent_position[0] = self.agent_position[0] + 1
 
             else:
-                self.matrix[self.agent_position[0] + 1, self.agent_position[1]] = 1
-                self.matrix[self.agent_position[0], self.agent_position[1]] = 0
+                self.matrix[self.agent_position[0] + 1][self.agent_position[1]] = 1
+                self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
                 self.agent_position[0] = self.agent_position[0] + 1
 
 
@@ -154,7 +154,15 @@ class WarehouseAgent():
 env = WarehouseAgent()
 
 env.render()
-
 first = env.step('DOWN')
-print(first)
+sec = env.step('DOWN')
+th = env.step('RIGHT')
+fou = env.step('RIGHT')
+fif = env.step('DOWN')
+six = env.step('LEFT')
+sev = env.step('LEFT')
+eig = env.step('DOWN')
+nin = env.step('LEFT')
+ten = env.step('UP')
+print(ten)
 env.render()
