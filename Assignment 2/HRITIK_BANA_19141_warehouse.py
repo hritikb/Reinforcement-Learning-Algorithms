@@ -13,7 +13,15 @@ class WarehouseAgent():
 
         self.box_location = [4,3]
         self.goal_location = [3,1]
+
+        # self.matrix will keep track of the current board situation. In this representation, walls and forbidden regions
+        # are denoted by '-1', empty squares are denoted by '0', agent is denoted by '1', box is denoted by '2', and goal
+        # location is denoted by '3'
         self.matrix = [[-1, -1, -1, -1, -1, -1], [-1, 0, 1, -1, -1, -1], [-1, 0, 0, -1, -1, -1], [-1, 3, 0, 0, 0, -1], [-1, 0, 0, 2, 0, -1], [-1, 0, 0, -1, -1, -1], [-1, -1, -1, -1, -1, -1]]
+        
+        # if the agent pushes the box next to the wall (other than the left wall along which the goal location also lies
+        # then no matter what action, the agent cannot bring the box away from the wall and hence will never be able to take 
+        # the box to the goal location. self.valid_states contains all the states which will not lead to such situations.
         self.valid_states = [[2, 1], [2, 2], [3, 1], [3, 2], [3, 3], [4, 1], [4, 2], [4, 3]]
 
     def reset(self):
@@ -45,12 +53,16 @@ class WarehouseAgent():
         """
         done = False
         if action == 'LEFT':
-            if self.matrix[self.agent_position[0]][self.agent_position[1] - 1] == -1:
+
+            # if wall is on the left
+            if self.matrix[self.agent_position[0]][self.agent_position[1] - 1] == -1: 
                 reward = -1
 
+            # if box is on the left, but to the left of box is the wall.
             elif self.matrix[self.agent_position[0]][self.agent_position[1] - 1] == 2 and self.matrix[self.agent_position[0]][self.agent_position[1] - 2] == -1:
                 reward = -1
 
+            # when the box is on the left, and the wall is not to the left of box.
             elif self.matrix[self.agent_position[0]][self.agent_position[1] - 1] == 2:
 
                 self.matrix[self.agent_position[0]][self.agent_position[1] - 1] = 1
@@ -60,6 +72,7 @@ class WarehouseAgent():
                 self.box_location[1] = self.box_location[1] - 1
                 self.agent_position[1] = self.agent_position[1] - 1
 
+            # when neither the wall nor the box is to the left of the agent.    
             else:
                 self.matrix[self.agent_position[0]][self.agent_position[1] - 1] = 1
                 self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
@@ -67,13 +80,15 @@ class WarehouseAgent():
 
         elif action == 'RIGHT':
             
-#             print(self.agent_position[0])
+            # if wall is on the right
             if self.matrix[self.agent_position[0]][self.agent_position[1] + 1] == -1:
                 reward = -1
 
+            # if box is on the right, but to the right of box is the wall.
             elif self.matrix[self.agent_position[0]][self.agent_position[1] + 1] == 2 and self.matrix[self.agent_position[0]][self.agent_position[1] + 2] == -1:
                 reward = -1
 
+            # when the box is on the right, and the wall is not to the right of box.
             elif self.matrix[self.agent_position[0]][self.agent_position[1] + 1] == 2:
 
                 self.matrix[self.agent_position[0]][self.agent_position[1] + 1] = 1
@@ -83,6 +98,7 @@ class WarehouseAgent():
                 self.box_location[1] = self.box_location[1] + 1
                 self.agent_position[1] = self.agent_position[1] + 1
 
+            # when neither the wall nor the box is to the right of the agent.    
             else:
                 self.matrix[self.agent_position[0]][self.agent_position[1] + 1] = 1
                 self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
@@ -90,12 +106,15 @@ class WarehouseAgent():
 
         elif action == 'UP':
             
+            # if wall is above
             if self.matrix[self.agent_position[0] - 1][self.agent_position[1]] == -1:
                 reward = -1
 
+            # if box is above, but above the box is the wall.
             elif self.matrix[self.agent_position[0] - 1][self.agent_position[1]] == 2 and self.matrix[self.agent_position[0] - 2][self.agent_position[1]] == -1:
                 reward = -1
 
+            # when the box is above, and the wall is not above the box.
             elif self.matrix[self.agent_position[0] - 1][self.agent_position[1]] == 2:
 
                 self.matrix[self.agent_position[0] - 1][self.agent_position[1]] = 1
@@ -105,6 +124,7 @@ class WarehouseAgent():
                 self.box_location[0] = self.box_location[0] - 1
                 self.agent_position[0] = self.agent_position[0] - 1
 
+            # when neither the wall nor the box is above the agent.    
             else:
                 self.matrix[self.agent_position[0] - 1][self.agent_position[1]] = 1
                 self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
@@ -112,12 +132,15 @@ class WarehouseAgent():
 
         elif action == 'DOWN':
             
+            # if wall is below
             if self.matrix[self.agent_position[0] + 1][self.agent_position[1]] == -1:
                 reward = -1
 
+            # if box is below, but below the box is the wall.
             elif self.matrix[self.agent_position[0] + 1][self.agent_position[1]] == 2 and self.matrix[self.agent_position[0] + 2][self.agent_position[1]] == -1:
                 reward = -1
 
+            # when the box is below, and the wall is not below the box.
             elif self.matrix[self.agent_position[0] + 1][self.agent_position[1]] == 2:
 
                 self.matrix[self.agent_position[0] + 1][self.agent_position[1]] = 1
@@ -127,6 +150,7 @@ class WarehouseAgent():
                 self.box_location[0] = self.box_location[0] + 1
                 self.agent_position[0] = self.agent_position[0] + 1
 
+            # when neither the wall nor the box is below the agent.    
             else:
                 self.matrix[self.agent_position[0] + 1][self.agent_position[1]] = 1
                 self.matrix[self.agent_position[0]][self.agent_position[1]] = 0
@@ -134,12 +158,11 @@ class WarehouseAgent():
 
 
         if self.box_location == self.goal_location:
-            reward = 1
+            reward = 0
             done = True
         elif self.box_location not in self.valid_states:
             done = True
             reward = -1
-            print(self.agent_position)
 
         else:
             reward = -1
@@ -149,8 +172,9 @@ class WarehouseAgent():
     def render(self):
         """Function to get the simulation of the warehouse agent system 
         """
-        print(self.matrix)
+        print(*self.matrix, sep = '\n')
 
+# Commands to check if the environment is working fine
 env = WarehouseAgent()
 
 env.render()
